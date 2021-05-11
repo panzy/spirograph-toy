@@ -5,13 +5,14 @@ import ParamEditor from './ParamEditor';
 
 function App() {
 
+  const graph = new Spirograph();
+
   // param r2
   const [r2, setR2] = useState(25);
 
   useEffect(() => {
-    let s = new Spirograph();
-    s.start(r2);
-    return () => s.stop();
+    graph.start(r2);
+    return graph.stop;
   });
 
   return (
@@ -19,7 +20,12 @@ function App() {
       <header className="App-header">
         <canvas/>
       </header>
-      <ParamEditor defaultValue={r2} onChange={r2 => setR2(r2)}/>
+      <ParamEditor
+        defaultValue={r2}
+        onChange={r2 => setR2(r2)}
+        onPause={() => graph.pause()}
+        onResume={() => graph.resume()}
+      />
     </div>
   );
 }

@@ -86,6 +86,15 @@ class Spirograph {
       requestAnimationFrame(this.loop);
   }
 
+  pause = () => {
+    this.stop();
+  }
+
+  resume = () => {
+    this.stopped = false;
+    this.loop();
+  }
+
   start = (r2Percentage) => {
     let canvas = document.querySelector('canvas');
     this.ctx = canvas.getContext('2d');
