@@ -3,9 +3,6 @@ function dist(x1, y1, x2, y2) {
 }
 
 class Spirograph {
-  constructor() {
-    this.stopped = false;
-  }
 
   loop = () => {
 
@@ -43,7 +40,6 @@ class Spirograph {
     if (track2.length > 0 && dist(x2, y2, track2[0][0], track2[0][1]) < 1) {
       track2.push([x2, y2]);
       this.track2Full = true;
-      this.stopped = true;
     }
     if (!this.track2Full) {
       track2.push([x2, y2]);
@@ -84,7 +80,7 @@ class Spirograph {
       ctx.stroke();
     }
 
-    if (!this.stopped) {
+    if (!this.track2Full) {
       // draw the gears
       ctx.strokeStyle = GREEN;
       // outter gear
@@ -100,7 +96,14 @@ class Spirograph {
       ctx.moveTo(x, y);
       ctx.lineTo(x2, y2);
       ctx.stroke();
+    }
 
+    // Dry run several times before stop the animation to get rid of the gears completely.
+    if (this.track2Full && ++this.dryRunTimes > 10) {
+      this.stopped = true;
+    }
+
+    if (!this.stopped) {
       // call for next frame
       requestAnimationFrame(this.loop);
     }
@@ -122,6 +125,7 @@ class Spirograph {
     this.height = canvas.height = window.innerHeight;
     this.r2Percentage = r2Percentage;
     this.stopped = false;
+    this.dryRunTimes = 0; // each loop after the tracks are full is a dry run
     this.a1 = Math.PI * 1.5;
     this.a2 = this.a1;
     this.track2 = [];
