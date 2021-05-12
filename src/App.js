@@ -23,8 +23,6 @@ function App() {
       <ParamEditor
         defaultValue={r2}
         onChange={r2 => setR2(r2)}
-        onPause={() => graph.pause()}
-        onResume={() => graph.resume()}
       />
     </div>
   );
