@@ -19,9 +19,9 @@ class Spirograph {
     const delta1 = Math.PI / 90;
 
     const r2 = r1 * this.r2Percentage / 100.0;
-    const delta2 = -delta1 * 100.0 / Math.max(1, this.r2Percentage);
+    const delta2 = this.r2Percentage > 0 ? -delta1 * 100.0 / this.r2Percentage : 0;
 
-    const r3 = r2 - 1;
+    const r3 = Math.max(0, r2 - 1);
 
     let x = cx + (r1 - r2) * Math.cos(a1);
     let y = cy + (r1 - r2) * Math.sin(a1);
@@ -37,21 +37,29 @@ class Spirograph {
     this.a2 += delta2;
 
     // append to track2
-    if (track2.length > 0 && dist(x2, y2, track2[0][0], track2[0][1]) < 1) {
-      track2.push([x2, y2]);
+    if (r2 > 0) {
+      if (track2.length > 0 && dist(x2, y2, track2[0][0], track2[0][1]) < 1) {
+        track2.push([x2, y2]);
+        this.track2Full = true;
+      }
+      if (!this.track2Full) {
+        track2.push([x2, y2]);
+      }
+    } else {
       this.track2Full = true;
-    }
-    if (!this.track2Full) {
-      track2.push([x2, y2]);
     }
 
     // append to track3
-    if (track3.length > 2 && dist(x3, y3, track3[0][0], track3[0][1]) < 2) {
+    if (r3 > 0) {
+      if (track3.length > 2 && dist(x3, y3, track3[0][0], track3[0][1]) < 2) {
+        this.track3Full = true;
+        track3.push([x3, y3]);
+      }
+      if (!this.track3Full) {
+        track3.push([x3, y3]);
+      }
+    } else {
       this.track3Full = true;
-      track3.push([x3, y3]);
-    }
-    if (!this.track3Full) {
-      track3.push([x3, y3]);
     }
 
     //
