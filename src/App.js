@@ -8,7 +8,7 @@ function App() {
   const graph = new Spirograph();
 
   // param r2
-  const [r2, setR2] = useState(25);
+  const [r2, setR2] = useState(35);
 
   useEffect(() => {
     graph.start(r2);
