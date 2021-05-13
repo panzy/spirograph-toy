@@ -7,11 +7,14 @@ function App() {
 
   const graph = new Spirograph();
 
-  // param r2
-  const [r2, setR2] = useState(35);
+  // export for inspecting
+  global.graph = graph;
+
+  // params
+  const [params, setParams] = useState({r2: 60, r3: 30});
 
   useEffect(() => {
-    graph.start(r2);
+    graph.start(params);
     return graph.stop;
   });
 
@@ -21,8 +24,8 @@ function App() {
         <canvas/>
       </header>
       <ParamEditor
-        defaultValue={r2}
-        onChange={r2 => setR2(r2)}
+        defaultValue={params}
+        onChange={p => setParams(p)}
       />
     </div>
   );

@@ -5,3 +5,7 @@
 #ParamEditor label {
     color: #ccc;
 }
+
+#ParamEditor input {
+    width: 200px;
+}
