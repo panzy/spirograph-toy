@@ -11,7 +11,7 @@ function App() {
   global.graph = graph;
 
   // params
-  const [params, setParams] = useState({r2: 60, r3: 30});
+  const [params, setParams] = useState({r2: 32, r3: 50, reverse: true});
 
   useEffect(() => {
     graph.start(params);

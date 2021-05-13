@@ -9,3 +9,7 @@
 #ParamEditor input {
     width: 200px;
 }
+
+#ParamEditor input[type='checkbox'] {
+    width: unset;
+}

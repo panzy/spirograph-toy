@@ -10,7 +10,7 @@ class Spirograph {
     const RED = 'rgba(255, 0, 0, 1)';
     const YELLOW = 'rgba(255, 255, 0, .5)';
 
-    const {ctx, width, height, a1, a2, track3, track4} = this;
+    const {ctx, width, height, a1, a2, reverse, track3, track4} = this;
 
     // the center
     const cx = width / 2;
@@ -23,7 +23,7 @@ class Spirograph {
 
     // the inner gear
     const r2 = r1 * this.r2Percentage / 100.0;
-    const delta2 = this.r2Percentage > 0 ? -delta1 * 100.0 / this.r2Percentage : 0;
+    const delta2 = (this.r2Percentage > 0 ? delta1 * 100.0 / this.r2Percentage : 0) * (reverse ? 1 : -1);
 
     // the pencil's position, specified by its distance to the inner gear's center.
     const r3 = r2 * this.r3Percentage / 100.0;
@@ -127,13 +127,14 @@ class Spirograph {
     this.loop();
   }
 
-  start = ({r2, r3}) => {
+  start = ({r2, r3, reverse}) => {
     let canvas = document.querySelector('canvas');
     this.ctx = canvas.getContext('2d');
     this.width = canvas.width = window.innerWidth;
     this.height = canvas.height = window.innerHeight;
     this.r2Percentage = r2;
     this.r3Percentage = r3;
+    this.reverse = reverse; // rever inner gear's rotation?
     this.stopped = false;
     this.dryRunTimes = 0; // each loop after the tracks are full is a dry run
     this.a1 = Math.PI * 1.5;

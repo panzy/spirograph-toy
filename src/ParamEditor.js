@@ -5,7 +5,13 @@ function ParamEditor({defaultValue, onChange}) {
   const [value, setVal] = useState(defaultValue ?? {r2: 0, r3: 0});
 
   const onChange_ = e => {
-    const newValue = {...value, [e.target.id]: parseInt(e.target.value)};
+    const newValue = {...value};
+
+    if (e.target.id === 'reverse') // bool
+      newValue.reverse = !newValue.reverse;
+    else // int
+      newValue[e.target.id] = parseInt(e.target.value);
+
     setVal(newValue);
     if (onChange)
       onChange(newValue);
@@ -20,6 +26,8 @@ function ParamEditor({defaultValue, onChange}) {
     <br/>
     <input type='range' id='r3' min='0' max='100' value={value.r3} onChange={onChange_}/>
     <br/>
+    <label htmlFor='reverse'>Reverse inner gear</label>
+    <input type='checkbox' id='reverse' checked={value.reverse} onChange={onChange_}/>
   </div>;
 }
 
